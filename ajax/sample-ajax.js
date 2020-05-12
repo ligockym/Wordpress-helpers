@@ -34,7 +34,11 @@ AjaxSample.prototype.ajaxRequest = function (extra_data) {
     var myAjax = new MyAjax();
     myAjax.sendRequest({}, result_data, function () {
         $('.ajax-insert').removeClass('ajax-loading');
-
+        let urlData = {
+            category: extra_data.category || '',
+            paged: request_data.currentPage || ''
+        };
+        myAjax.updateUrl(urlData);
     });
 }
 

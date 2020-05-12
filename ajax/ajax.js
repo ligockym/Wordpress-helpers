@@ -10,7 +10,7 @@
  * @param obj (optional) - only if you want to capsulate ajax request - .ajax-insert has to be inside this element
  * @constructor
  * @author Marián Ligocký
- * @version 1.0
+ * @version 1.0.1
  */
 var MyAjax = function (obj) {
     if (obj) {
@@ -28,7 +28,7 @@ MyAjax.prototype.sendRequest = function (args, data, callbackAfterDone) {
     }
     let default_args = {
         ajax_url: new URL(window.location.href).href,
-        update_pagination: true
+        update_pagination: true,
     }
     let __this = this;
 
@@ -104,6 +104,12 @@ MyAjax.prototype.changePagination = function (data) {
     }
 }
 
-MyAjax.prototype.changeUrl = function(urlData) {
-
+/**
+ * Updates url to contain urlData
+ * @param urlData - object
+ */
+MyAjax.prototype.updateUrl = function(urlData) {
+    // remove ajax parameter
+    let urlDataParsed = jQuery.param( urlData );
+    window.history.pushState({}, '', '?' + urlDataParsed);
 }
