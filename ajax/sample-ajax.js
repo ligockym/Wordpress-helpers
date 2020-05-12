@@ -32,7 +32,7 @@ AjaxSample.prototype.ajaxRequest = function (extra_data) {
     navigation.scrollTo($('.box_filter_tabs'), -70); *//
 
     var myAjax = new MyAjax();
-    myAjax.sendRequest({}, result_data, function () {
+    myAjax.sendRequest({}, result_data, function (request_data) {
         $('.ajax-insert').removeClass('ajax-loading');
         let urlData = {
             category: extra_data.category || '',
