@@ -1,0 +1,260 @@
+//
+// ANIMATIONS
+//
+
+// Hide all elements that are going to be animated
+.animate-ready {
+  visibility: hidden;
+}
+
+.animate-disabled * {
+  visibility: inherit;
+}
+
+// Element whose animation started
+//---------
+.animated {
+  animation-duration: 0.5s;
+  animation-fill-mode: backwards;
+  visibility: inherit;
+}
+
+// Fade InUpLight animation
+//---------
+.fadeIn {
+  animation-name: fadeIn;
+}
+
+.fadeInUpLight {
+  animation-name: fadeInUpLight;
+}
+
+.fadeInUpLighter {
+  animation-name: fadeInUpLighter;
+}
+
+.fadeInLeftRight {
+  animation-name: fadeInLeftRight;
+}
+
+.fadeInLeftRightStrong {
+  animation-name: fadeInLeftRightStrong;
+}
+
+
+.fadeInRightLeft {
+  animation-name: fadeInRightLeft;
+}
+
+
+.mapPopupAnimation {
+  animation-name: mapPopupAnimation;
+}
+
+//
+// ANIMATIONS' KEYFRAMES
+//
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Used for animating elements when scrolling down the page.
+@keyframes fadeInUpLight {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 30%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+// Used for animating elements when scrolling down the page.
+@keyframes fadeInUpLighter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 15%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes main-nav-top {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes main-nav-bottom {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+// REVERSE
+@keyframes main-nav-top-reverse {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes main-nav-bottom-reverse {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes fadeInLeftRight {
+  0% {
+    transform: translateX(20%);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInLeftRightStrong {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInRightLeft {
+  0% {
+    transform: translateX(-20%);
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes category-nav-line {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes bottom-bar-central {
+  100% {
+    transform: translateY(0%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes intro-products-icon-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: translateY(3rem) rotate(180deg);
+  }
+}
+
+@keyframes icon-circle-thin {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes variationsFadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes variationsFadeOut {
+  0% {
+    display: flex;
+    opacity: 1;
+  }
+  99% {
+    display: flex;
+    opacity: 0;
+  }
+  100% {
+    display: none;
+    opacity: 0;
+  }
+}
+
+@keyframes mapPopupAnimation {
+  0% {
+    transform: translate(-50%, -100%) scale(0.7);
+  }
+  1% {
+    transform: translate(-50%, -100%) scale(1);
+  }
+}
+
+@keyframes mapWindowAnimation {
+  0% {
+    opacity: 0;
+    transform: scale(.95);
+  }
+  99% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes loadingBox {
+  0% {
+    background-color: $c_grey14;
+  }
+  50.0% {
+    background-color: $c_grey18;
+  }
+  100.0% {
+    background-color: $c_grey14;
+  }
+}
