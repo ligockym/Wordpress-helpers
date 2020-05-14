@@ -7,28 +7,42 @@
  *
  * In case of load_more use load_more: true for data
  *
- * @param obj (optional) - only if you want to capsulate ajax request - .ajax-insert has to be inside this element
- * @constructor
+ * @param obj (optional) - jQuery object - only if you want to capsule ajax request - .ajax-insert has to be inside this element
  * @author Marián Ligocký
- * @version 1.0.1
+ * @version 1.0.2
  */
-var MyAjax = function (obj) {
+var MyAjax = function (obj, settings) {
     if (obj) {
         this.root_el = jQuery(obj);
     } else {
         this.root_el = jQuery('body');
     }
-    this.core = new Core();
+
+    let default_settings = {
+        load_more_btn: this.root_el.find('.load-more-button'),
+        ajax_insert: this.root_el.find('ajax-insert'),
+        pagination: {
+            current_shown: this.root_el.find('.ajax-current-shown-items')
+        }
+    }
+
+    this.settings = Object.assign(default_settings, settings);
 }
 
+/**
+ * Sends request
+ * @param args for all options see default_args
+ * @param data any data object
+ * @param callbackAfterDone optionally run MyAjax.updateUrl()
+ */
 MyAjax.prototype.sendRequest = function (args, data, callbackAfterDone) {
     let default_data = {
-        ajax_load_more: 'products',
+        ajax: 'articles', // specifies which ajax request you are performing
         load_more: false, // set true if you want to add products and not remove previous
     }
     let default_args = {
-        ajax_url: new URL(window.location.href).href,
-        update_pagination: true,
+        ajax_url: new URL(window.location.href).href, // this url
+        update_pagination: true, // whether MyAjax.updatePagination() is called
     }
     let __this = this;
 
@@ -42,21 +56,19 @@ MyAjax.prototype.sendRequest = function (args, data, callbackAfterDone) {
         data: data,
 
     }).done(function (result_data, textStatus, jqXHR) {
-        __this.core.lazyLoadBackground();
-
         if (args.update_pagination) {
             __this.buttonShowHide(result_data);
             __this.changePagination(result_data);
         }
 
         // Insert content by .ajax-insert tag
-        if (__this.root_el.find('.ajax-insert').length == 0) {
+        if (__this.settings.ajax_insert.length == 0) {
             console.error('No ajax insert container');
         }
         if (data.load_more === true) {
-            __this.root_el.find('.ajax-insert').append(result_data.dataView);
+            __this.settings.ajax_insert.append(result_data.dataView);
         } else {
-            __this.root_el.find('.ajax-insert').html(result_data.dataView);
+            __this.settings.ajax_insert.html(result_data.dataView);
         }
 
         // custom callback
@@ -69,9 +81,9 @@ MyAjax.prototype.sendRequest = function (args, data, callbackAfterDone) {
 MyAjax.prototype.buttonShowHide = function (data) {
     var __this = this;
     if (data.total <= data.currentItemsContained) {
-        __this.root_el.find('.load-more-button').hide();
+        __this.settings.load_more_btn.hide();
     } else {
-        __this.root_el.find('.load-more-button').show();
+        __this.settings.load_more_btn.show();
     }
 }
 
@@ -80,11 +92,10 @@ MyAjax.prototype.buttonShowHide = function (data) {
  * @param data
  */
 MyAjax.prototype.changePagination = function (data) {
-    let number_shown_posts = data.currentItemsContained,
-        allp = document.getElementById("current-shown-items");
+    let number_shown_posts = data.currentItemsContained;
 
-    // insert number of posts shown into #current-shown-items
-    allp.innerText = number_shown_posts;
+    // insert number of posts shown
+    this.settings.pagination.current_shown.text(number_shown_posts);
 
     let page_numbers = this.root_el.find('.page-numbers');
     page_numbers.removeClass('active');

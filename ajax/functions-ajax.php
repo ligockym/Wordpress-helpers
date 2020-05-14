@@ -1,7 +1,5 @@
 <?php
-add_filter('request', 'altanok_ajax');
-
-function sample_ajax_articles()
+function boilerplate_ajax_articles()
 {
     /**
      * @var $posts - wpquery
@@ -10,7 +8,7 @@ function sample_ajax_articles()
      * @var $paged
      */
     ob_start();
-    include 'page-parts/SOME_TEMPLATE.php';
+    include 'demo-articles.php';
     $data = ob_get_contents();
     ob_end_clean();
 
@@ -19,20 +17,23 @@ function sample_ajax_articles()
     $itemsPerPage = $postsPerPage;
     $numberOfPages = ceil($total / $itemsPerPage);
 
-    return compact('total', 'currentItemsContained', 'itemsPerPage', 'numberOfPages', 'data');
+    return compact('total', 'currentItemsContained', 'itemsPerPage', 'numberOfPages', 'data', 'paged');
 }
 
-function altanok_ajax($request)
+function boilerplate_ajax($request)
 {
 
-    if (isset($_GET['ajax_load_more'])) {
+    if (isset($_GET['ajax'])) {
 
-        if ($_GET['ajax_load_more'] == 'articles-all') {
-            $result = sample_ajax_articles();
+        if ($_GET['ajax'] == 'articles') {
+            $result = boilerplate_ajax_articles();
+        } else {
+            die('Bad ajax request');
         }
+
         // all products shown on previous pages and this page
         $response = new \stdClass();
-        $response->loadMoreType = $_GET['ajax_load_more'];
+        $response->loadMoreType = $_GET['ajax'];
         $response->total = (int)$result['total'];
         $response->currentItemsContained = (int)$result['currentItemsContained'];
         $response->itemsPerPage = (int)$result['itemsPerPage'];
@@ -48,3 +49,5 @@ function altanok_ajax($request)
 
     return $request;
 }
+add_filter('request', 'boilerplate_ajax');
+?>
